@@ -27,6 +27,7 @@
 #include "bigint/include/BigIntegerLibrary.hpp"
 #include "ecc/ecc.hpp"
 #include "sha1/sha1.hpp"
+#include "sha256/sha256.hpp"
 
 #define IQUE_ECC 1
 
@@ -40,6 +41,11 @@ void bigunsigned_to_gf2m(const BigUnsigned & src, element dst);
 	SHA-1 result as big (unsigned) integer
 */
 BigUnsigned sha1(uint8_t * input, int length);
+
+/*
+	SHA-256 result as big (unsigned) integer
+*/
+BigUnsigned sha256(uint8_t * input, int length);
 
 /*
 	Generation of k, for signing

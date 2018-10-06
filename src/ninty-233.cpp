@@ -70,6 +70,26 @@ BigUnsigned sha1(uint8_t * input, int length) {
 }
 
 /*
+	SHA-256 result as big (unsigned) integer
+*/
+BigUnsigned sha256(uint8_t * input, int length) {
+	SHA256_HASH     hash;
+	Sha256Context   context;
+	
+	Sha256Initialise(&context);
+	Sha256Update(&context, input, length);
+	Sha256Finalise(&context, &hash);
+	
+	BigUnsigned hash_bigint = hash.bytes[0];
+	for (int i = 1; i < 32; ++i) {
+		hash_bigint <<= 8;
+		hash_bigint += hash.bytes[i];
+	}
+
+	return hash_bigint;
+}
+
+/*
 	Generation of k, for signing
 */
 BigUnsigned generate_k(const BigUnsigned & n, const BigUnsigned & hash) {
