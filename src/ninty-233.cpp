@@ -71,6 +71,7 @@ BigUnsigned sha1(uint8_t * input, int length) {
 
 /*
 	SHA-256 result as big (unsigned) integer
+	NOTE: This truncates the last 23 bits!
 */
 BigUnsigned sha256(uint8_t * input, int length) {
 	SHA256_HASH     hash;
@@ -79,7 +80,11 @@ BigUnsigned sha256(uint8_t * input, int length) {
 	Sha256Initialise(&context);
 	Sha256Update(&context, input, length);
 	Sha256Finalise(&context, &hash);
-	
+
+	// Here we remove the last 23 bits (8 + 8 + 7) of the hash to reduce it down from
+	// 256 bits to 233 bits, hence make it able to be used as a sect233r1 input hash
+	hash.bytes[31] = 0; hash.bytes[30] = 0; hash.bytes[29] &= 0x11111110;
+
 	BigUnsigned hash_bigint = hash.bytes[0];
 	for (int i = 1; i < 32; ++i) {
 		hash_bigint <<= 8;

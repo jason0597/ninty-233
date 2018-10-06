@@ -44,6 +44,7 @@ BigUnsigned sha1(uint8_t * input, int length);
 
 /*
 	SHA-256 result as big (unsigned) integer
+	NOTE: This truncates the last 23 bits!
 */
 BigUnsigned sha256(uint8_t * input, int length);
 
