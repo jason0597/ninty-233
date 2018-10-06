@@ -60,4 +60,9 @@ void ecdh(const uint8_t * private_key, const uint8_t * public_key, uint8_t * out
 void ecdsa_sign(const BigUnsigned hash, const uint8_t * private_key, element r_out, element s_out);
 bool ecdsa_verify(const BigUnsigned hash, const uint8_t * public_key, const element r_input, const element s_input);
 
+/*
+	External function
+*/
+void ninty_233_ecdsa_sign_sha256(uint8_t * input, int length, const uint8_t * private_key, element r_out, element s_out);
+
 #endif

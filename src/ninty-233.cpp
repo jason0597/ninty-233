@@ -227,3 +227,9 @@ bool ecdsa_verify(const BigUnsigned z, const uint8_t * public_key, const element
 	BigUnsigned x_p = gf2m_to_bigunsigned(P3.x);
 	return r == (x_p % n);
 }
+
+//   ninty_233_ecdsa_sign_sha256(unsigned char*, int, unsigned char const*, unsigned int*, unsigned int*)
+void ninty_233_ecdsa_sign_sha256(uint8_t * input, int length, const uint8_t * private_key, element r_out, element s_out) {
+	BigUnsigned hash_to_sign = sha256(input, length);
+	ecdsa_sign(hash_to_sign, private_key, r_out, s_out);
+}
